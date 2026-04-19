@@ -1,0 +1,235 @@
+/* Ensure the body has no default margins and a nice background */
+body {
+    margin: 0;
+    background-color: #f0f2f5;
+}
+
+/* 1. Target the main wrapper of your App dynamically */
+div:has(> #jobDescription) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto auto auto;
+    grid-template-areas:
+        "loading loading"
+        "exp exp"
+        "job job"
+        "cover eval"
+        "notes eval"
+        "genbtn evalbtn";
+    gap: 30px;
+    padding: 40px;
+    max-width: 1600px;
+    margin: 0 auto;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+/* 2. Loading text */
+div:has(> #jobDescription) > h1 {
+    grid-area: loading;
+    text-align: center;
+    color: #333;
+}
+
+/* 3. Experiences Section */
+div:has(> #jobDescription) > div:has(+ #jobDescription) {
+    grid-area: exp;
+    height: calc(100vh - 80px);
+    overflow-y: auto; 
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+/* Custom scrollbar for Experiences */
+div:has(> #jobDescription) > div:has(+ #jobDescription)::-webkit-scrollbar {
+    width: 8px;
+}
+div:has(> #jobDescription) > div:has(+ #jobDescription)::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 8px;
+}
+div:has(> #jobDescription) > div:has(+ #jobDescription)::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 8px;
+}
+div:has(> #jobDescription) > div:has(+ #jobDescription)::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Individual Experience nested cards */
+div:has(> #jobDescription) > div:has(+ #jobDescription) > div {
+    background: #f8f9fa;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+    margin-bottom: 24px;
+}
+
+/* 4. Job Description */
+#jobDescription {
+    grid-area: job;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+/* 5. Cover Letter */
+#coverLetter {
+    grid-area: cover;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+/* 6. Notes */
+#notes {
+    grid-area: notes;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+/* 7. Evaluation Section Main Container */
+div:has(> #jobDescription) > div:last-of-type {
+    grid-area: eval;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    
+    /* FIX: Constrain height and force internal scrolling so it doesn't cover the button */
+    height: fit-content;
+    max-height: calc(100vh - 150px); 
+    overflow-y: auto; 
+    
+    position: sticky;
+    top: 40px; 
+}
+
+/* Custom scrollbar for Evaluation box */
+div:has(> #jobDescription) > div:last-of-type::-webkit-scrollbar {
+    width: 8px;
+}
+div:has(> #jobDescription) > div:last-of-type::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 8px;
+    margin: 10px 0;
+}
+div:has(> #jobDescription) > div:last-of-type::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 8px;
+}
+
+/* NEW: Evaluation Bubble Styling for the text content */
+div:has(> #jobDescription) > div:last-of-type p,
+div:has(> #jobDescription) > div:last-of-type h4 {
+    background: #f8f9fa;
+    border: 1px solid #e2e8f0;
+    padding: 16px;
+    border-radius: 12px;
+    margin: 12px 0;
+    font-weight: normal;
+    line-height: 1.6;
+    color: #334155;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+/* NEW: Make the Score look like a prominent badge */
+div:has(> #jobDescription) > div:last-of-type h3:first-of-type {
+    display: inline-block;
+    background: #eff6ff;
+    color: #1d4ed8;
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid #bfdbfe;
+    margin-bottom: 24px;
+}
+
+/* 8. Buttons Placement */
+#generateCoverLetter, #modifyCoverLetter {
+    grid-area: genbtn;
+    justify-self: start;
+    align-self: start;
+}
+
+div:has(> #jobDescription) > button:last-of-type {
+    grid-area: evalbtn;
+    justify-self: start;
+    align-self: start;
+}
+
+/* --- Global Elements Styling --- */
+
+input, textarea {
+    width: 100%;
+    padding: 14px;
+    margin: 8px 0 16px 0;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 15px;
+    font-family: inherit;
+    transition: border-color 0.2s;
+}
+
+textarea {
+    resize: vertical; 
+    min-height: 200px;
+    line-height: 1.5;
+}
+
+input:focus, textarea:focus {
+    border-color: #3b82f6;
+    outline: none;
+}
+
+button {
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 10px;
+}
+
+button:hover:not(:disabled) {
+    background-color: #2563eb;
+}
+
+button:disabled {
+    background-color: #94a3b8;
+    cursor: not-allowed;
+}
+
+div:has(> #jobDescription) > button:last-of-type {
+    background-color: #10b981;
+}
+
+div:has(> #jobDescription) > button:last-of-type:hover:not(:disabled) {
+    background-color: #059669;
+}
+
+h2 {
+    margin-top: 0;
+    color: #1e293b;
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+}
+
+h3 {
+    color: #334155;
+    font-size: 18px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
